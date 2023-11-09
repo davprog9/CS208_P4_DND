@@ -6,6 +6,7 @@ import java.util.Random;
 abstract class Entity implements Actions {
     protected int armor;
     protected int health;
+
     protected String name;
     protected boolean aliveStatus;
     protected int levelCount;

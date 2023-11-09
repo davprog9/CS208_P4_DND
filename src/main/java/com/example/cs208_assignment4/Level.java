@@ -10,6 +10,12 @@ public class Level {
     private int currPlayerTurn;
     private int currLevelTurn;
 
+    /**
+     * Main constructor
+     * @param numPlayers defines the number of players
+     * @param numEnemies defines the number of enemies
+     * @author Victor Serra
+     */
     public Level(int numPlayers, int numEnemies) {
         this.numberOfPlayers = numPlayers;
         this.numberOfEnemies = numEnemies;

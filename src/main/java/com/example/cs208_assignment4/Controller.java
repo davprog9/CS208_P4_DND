@@ -22,6 +22,10 @@ public class Controller {
     public Controller() {
     }
 
+    /**
+     * Method func()
+     * @author David Arzumanyan
+     */
     @FXML
     public void func() {
         System.out.println("Hello");
