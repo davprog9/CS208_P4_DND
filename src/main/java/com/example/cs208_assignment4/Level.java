@@ -60,3 +60,4 @@ public class Level {
     }
 }
 
+// TODO: Array of players attack the enemy first, and then the enemy randomly picks one player and attacks one player
