@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cs208_assignment4.Controller">
   <children>
     <Label alignment="TOP_CENTER" layoutX="208.0" layoutY="23.0" text="Dungeon And Dragons" textAlignment="CENTER">
@@ -14,7 +13,7 @@
         <Font name="Helvetica" size="18.0" />
       </font>
     </Label>
-    <Label fx:id="player_name" alignment="TOP_LEFT" layoutX="101.0" layoutY="98.0" text="Player" textAlignment="CENTER">
+    <Label fx:id="player_name" alignment="TOP_LEFT" layoutX="79.0" layoutY="98.0" text="Player" textAlignment="CENTER">
       <font>
         <Font name="Helvetica" size="18.0" />
       </font>
@@ -24,12 +23,12 @@
         <Font name="Helvetica" size="18.0" />
       </font>
     </Label>
-    <Label fx:id="player_health" alignment="TOP_CENTER" layoutX="102.0" layoutY="134.0" text="Health: " textAlignment="CENTER">
+    <Label fx:id="player_health" alignment="TOP_CENTER" layoutX="82.0" layoutY="134.0" text="Health: " textAlignment="CENTER">
       <font>
         <Font name="Helvetica" size="14.0" />
       </font>
     </Label>
-    <Label fx:id="player_armor" alignment="TOP_CENTER" layoutX="103.0" layoutY="156.0" text="Armor: " textAlignment="CENTER">
+    <Label fx:id="player_armor" alignment="TOP_CENTER" layoutX="83.0" layoutY="156.0" text="Armor: " textAlignment="CENTER">
       <font>
         <Font name="Helvetica" size="14.0" />
       </font>
@@ -49,18 +48,18 @@
         <Font name="Helvetica" size="18.0" />
       </font>
     </Label>
-    <Label fx:id="rolled_number" alignment="TOP_CENTER" layoutX="276.0" layoutY="124.0" text="12" textAlignment="CENTER">
+    <Label fx:id="rolled_number" alignment="TOP_CENTER" layoutX="276.0" layoutY="124.0" text="0" textAlignment="CENTER" visible="false">
       <font>
         <Font name="Helvetica" size="18.0" />
       </font>
     </Label>
     <TextArea fx:id="textArea" layoutX="97.0" layoutY="199.0" prefHeight="150.0" prefWidth="400.0" />
-    <Button fx:id="rollDice_button" layoutX="97.0" layoutY="376.0" mnemonicParsing="false" onAction="#func" text="Roll the dice">
+    <Button fx:id="rollDice_button" layoutX="200.0" layoutY="382.0" mnemonicParsing="false" onAction="#onRollButtonClick" text="Roll the dice">
       <font>
         <Font size="15.0" />
       </font>
     </Button>
-    <Button fx:id="nextLeve_button" layoutX="227.0" layoutY="376.0" mnemonicParsing="false" text="Next level">
+    <Button fx:id="startGame_button" layoutX="97.0" layoutY="382.0" mnemonicParsing="false" onAction="#startGame" text="Start game">
       <font>
         <Font size="15.0" />
       </font>
