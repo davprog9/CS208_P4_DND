@@ -46,15 +46,16 @@ public class Controller {
     /**
      * Main constructor
      * Initializes list of players and one enemy object
+     *
      * @author David Arzumanyan
      */
     public Controller() {
         this.playerList = new LinkedList<Player>();
 
         // Adding players
-        this.playerList.add(new Player("David", 100,100));
-        this.playerList.add(new Player("Victor", 100,100));
-        this.playerList.add(new Player("Christopher", 100,100));
+        this.playerList.add(new Player("David", 100, 100));
+        this.playerList.add(new Player("Victor", 100, 100));
+        this.playerList.add(new Player("Christopher", 100, 100));
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
@@ -67,9 +68,10 @@ public class Controller {
     /**
      * Method initializes the GUI components before
      * running the application to avoid any NullExceptions
+     *
      * @author David Arzumanyan
      */
-    public void initialize(){
+    public void initialize() {
         // Setting the text area as non-editable
         this.textArea.setEditable(false);
 
@@ -85,37 +87,39 @@ public class Controller {
     }
 
     @FXML
-    private void onRollButtonClick(ActionEvent event){
-        if (this.entity_turn == 0){ // If 0 means it's player's turn, else enemy's
+    private void onRollButtonClick(ActionEvent event) {
+        if (this.entity_turn == 0) { // If 0 means it's player's turn, else enemy's
             rollingDice(this.current_player);
             this.current_player = this.playerList.get(2);
         }
     } // TODO: Continue writing the logic
-    public void logic(){
-        while(this.playerList.size() != 0){
+
+    public void logic() {
+        while (this.playerList.size() != 0) {
             this.textArea.appendText("Player " + this.current_player.name + " starts rolling.");
 
         }
     }
+
     /**
      * Method starts the game and displays a prompt message
      * about playing players and the enemy
+     *
      * @author David Arzumanyan
      */
     @FXML
-    public void startGame(){
-        if (this.welcomeStatus == 0){
+    public void startGame() {
+        if (this.welcomeStatus == 0) {
             // Displaying the first message - players and enemy information
             this.textArea.appendText("Welcome, the game has started!\n");
             this.textArea.appendText("Below listed players are playing against the " + this.enemy.name + "\n");
-            for (Player player : this.playerList){
+            for (Player player : this.playerList) {
                 this.textArea.appendText("Player: " + player.name + "\n");
             }
             this.welcomeStatus += 1;
-        }
-        else{
+        } else {
             this.textArea.appendText("The game is already in progress, playing players are `\n");
-            for (Player player : this.playerList){
+            for (Player player : this.playerList) {
                 this.textArea.appendText("Player: " + player.name + "\n");
             }
         }
@@ -123,13 +127,14 @@ public class Controller {
 
     /**
      * Method defines the entity turn first, rolls the dice and attacks its enemy
+     *
      * @param currEntity defines the playing entity, can be of object Player or Enemy
      * @author David Arzumanyan
      */
     @FXML
-    public void rollingDice(Entity currEntity){
+    public void rollingDice(Entity currEntity) {
         // If the entity is of Player object
-        if (currEntity instanceof Player){
+        if (currEntity instanceof Player) {
             this.textArea.appendText("Player " + currEntity.name + " is rolling the dice\n");
 
             int damage = currEntity.rollDice();
@@ -145,7 +150,7 @@ public class Controller {
         }
 
         // If the entity is of Enemy object
-        else if (currEntity instanceof Enemy){
+        else if (currEntity instanceof Enemy) {
             this.textArea.appendText("Enemy " + currEntity.name + " is rolling the dice\n");
 
             int damage = currEntity.rollDice();
@@ -153,10 +158,11 @@ public class Controller {
             this.rolled_number.setVisible(true);
 
             this.textArea.appendText("Enemy " + currEntity.name + " got the number " + damage + "\n");
-            this.textArea.appendText("Player " + this.current_player +  " got damaged by " + damage + " points from " + currEntity.name + "\n");
+            this.textArea.appendText("Player " + this.current_player + " got damaged by " + damage + " points from " + currEntity.name + "\n");
 
             // Attacking the player
             currEntity.attack(damage, this.current_player);
         }
     }
+}
 
