@@ -3,8 +3,10 @@ package com.example.cs208_assignment4;
 import java.util.Random;
 
 public class Player extends Entity {
-    public Player(String name, int armor, int health) {
+    private int damagePerTurn;
+    public Player(String name, int armor, int health,  int damagePerTurn) {
         super(name, armor, health);
+        this.damagePerTurn = damagePerTurn;
     }
 
     @Override
@@ -38,8 +40,13 @@ public class Player extends Entity {
         return damage;*/
     }
 
+    public void setDamagePerTurn(int newDamage) {
+        this.damagePerTurn = newDamage;
+    }
+
+
     public int rollDice() {
         Random rand = new Random();
-        return rand.nextInt(30) + 1;
+        return rand.nextInt(damagePerTurn) + 1;
     }
 }
