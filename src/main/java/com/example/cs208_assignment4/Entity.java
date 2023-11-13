@@ -5,16 +5,17 @@ import java.util.Hashtable;
 public abstract class Entity implements Actions {
     protected int armor;
     protected int health;
-
+    protected int damagePerTurn;
     protected String name;
     protected boolean aliveStatus;
     protected int levelCount;
     protected Hashtable<Integer, Entity> enemies = new Hashtable();
 
-    public Entity(String name, int armor, int health) {
+    public Entity(String name, int armor, int health, int damagePerTurn) {
         this.name = name;
         this.armor = armor;
         this.health = health;
+        this.damagePerTurn = damagePerTurn;
         this.aliveStatus = true;
         this.levelCount = 0;
     }

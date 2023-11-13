@@ -50,19 +50,21 @@ public class Controller {
     /**
      * Main constructor
      * Initializes list of players and one enemy object
+     *
      * @author David Arzumanyan
      */
     public Controller() {
         this.playerList = new LinkedList<Player>();
 
         // Adding players
-        this.playerList.add(new Player("David", 100, 100));
-        this.playerList.add(new Player("Victor", 100, 100));
-        this.playerList.add(new Player("Christopher", 100, 100));
+
+        this.playerList.add(new Player("David", 100, 100, 30));
+        this.playerList.add(new Player("Victor", 100, 100, 30));
+        this.playerList.add(new Player("Christopher", 100, 100, 30));
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
-        this.enemy = new Enemy("Enemy 1", 100, 100);
+        this.enemy = new Enemy("Enemy 1", 100, 100, 55);
 
         this.welcomeStatus = 0;
         this.entity_turn = 0;
