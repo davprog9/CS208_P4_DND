@@ -44,6 +44,7 @@ public class Controller {
     private int welcomeStatus;
 
     private int entity_turn;
+    private int levelNum;
 
     private Iterator<Player> iterator;
 
@@ -62,6 +63,8 @@ public class Controller {
         this.playerList = new LinkedList<Player>();
         entityMap = new HashMap<>();
         leaderboard = new Leaderboard();
+        //initializes level counter
+        this.levelNum = 1;
 
         // Adding players
 
@@ -169,6 +172,25 @@ public class Controller {
             }
         }
     }
+    public void nextLevel(){
+        if (levelNum != 3) {
+            //increment level counter
+            this.levelNum += 1;
+            //Increase Enemy Stats
+            this.textArea.appendText("  -You have reached Level " + levelNum + "\n");
+            this.enemy_name.setText("Enemy " + levelNum);
+            this.enemy.health = 100 * levelNum;
+            this.enemy.armor = 100 * levelNum;
+        }else{
+            // TODO: Implement Leaderboard here
+            this.textArea.clear();
+            this.textArea.setText("You've Won! \n");
+            this.textArea.appendText("Survivors:\n");
+            for (Player p: playerList){
+                this.textArea.appendText("  -" + p.name + ", Score: " + p.health +"\n");
+            }
+        }
+    }
 
     /**
      * Method defines the entity turn first, rolls the dice and attacks its enemy
@@ -202,6 +224,7 @@ public class Controller {
             if (this.enemy.health <= 0){
                 this.enemy_health.setText("Health: 0");
                 this.textArea.appendText("Enemy: " + this.enemy.name + " defeated!\n");
+                nextLevel();
             }
             else{
                 this.enemy_health.setText("Health: " + this.enemy.health);
