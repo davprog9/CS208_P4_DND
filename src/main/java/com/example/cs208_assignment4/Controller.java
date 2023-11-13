@@ -59,7 +59,7 @@ public class Controller {
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
-        this.enemy = new Enemy("Enemy 1", 100, 100);
+        this.enemy = new Enemy("Enemy 1", 100, 100, 55);
 
         this.welcomeStatus = 0;
         this.entity_turn = 0;
