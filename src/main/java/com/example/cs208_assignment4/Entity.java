@@ -24,9 +24,7 @@ public abstract class Entity implements Actions {
         return this.aliveStatus;
     }
 
-    public void addEnemy(int level, Entity enemy) {
-        this.enemies.put(level, enemy);
-    }
+    // public void addEnemy(int level, Entity enemy) {this.enemies.put(level, enemy);}
 
     public int hashCode() {
         return this.name.hashCode() ^ Integer.hashCode(this.health) ^ Integer.hashCode(this.armor);
