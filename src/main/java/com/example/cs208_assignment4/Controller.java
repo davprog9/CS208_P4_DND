@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class Controller {
 
@@ -45,7 +42,13 @@ public class Controller {
 
     private int entity_turn;
     private int levelNum;
-
+    private final String[] enemyNames = new String[]{   //List of unique enemy names
+            "Skeleton",
+            "Goblin",
+            "Troll",
+            "Giant",
+            "Dragon"
+    };
     private Iterator<Player> iterator;
 
     private HashMap<Integer, Entity> entityMap;
@@ -77,7 +80,7 @@ public class Controller {
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
-        this.enemy = new Enemy("Enemy 1", 100, 100, 55);
+        this.enemy = new Enemy(enemyNames[0], 50, 100, 55);
 
         this.welcomeStatus = 0;
         this.entity_turn = 0;
@@ -172,24 +175,51 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * This method is run when the Enemy health reaches 0.
+     * It increments the level counter, {@code levelNum}, and sets enemy's name, damage and armor
+     * to a value related to this level counter. Once {@code maxLevels} is reached, the game is won,
+     * it will display the leaderboard.
+     * @author Victor Serra
+     */
     public void nextLevel(){
-        if (levelNum != 3) {
+        int maxLevels = 5;
+        if (levelNum != maxLevels) {
             //increment level counter
             this.levelNum += 1;
-            //Increase Enemy Stats
             this.textArea.appendText("  -You have reached Level " + levelNum + "\n");
-            this.enemy_name.setText("Enemy " + levelNum);
+            //Increase Enemy Stats
+            this.enemy_name.setText(enemyNames[levelNum-1]);
             this.enemy.health = 100 * levelNum;
-            this.enemy.armor = 100 * levelNum;
+            this.enemy.armor = 50 * levelNum;
         }else{
-            // TODO: Implement Leaderboard here
-            this.textArea.clear();
-            this.textArea.setText("You've Won! \n");
-            this.textArea.appendText("Survivors:\n");
-            for (Player p: playerList){
-                this.textArea.appendText("  -" + p.name + ", Score: " + p.health +"\n");
-            }
+            gameOver();
         }
+    }
+
+    /**
+     * This method will be called when all levels are beaten, or if all players die.
+     * It sorts the {@code playerList} by the score parameter, and appends at the end
+     * of the game in {@code textArea}.
+     * @author Victor Serra
+     */
+    public void gameOver(){
+        // TODO: Implement Leaderboard here (This is for the time being)
+        //sets each player score param to damage dealt
+        this.textArea.clear();
+        for (Player p: playerList){
+            p.setScore(leaderboard.getDamage(p));
+        }
+        //sorts and appends ordered players score at the end of the game
+        playerList.sort(Comparator.comparingInt(Player::getScore));
+        int j = 1;
+        for (int i = playerList.size()-1; i >= 0; i--) {
+            this.textArea.appendText(j + ") Player " + playerList.get(i).name + " Dealt " + leaderboard.getDamage(playerList.get(i)) + " Damage!\n");
+            j++;
+        }
+        //maybe restart game here
+        //this.welcomeStatus = 0;
     }
 
     /**
