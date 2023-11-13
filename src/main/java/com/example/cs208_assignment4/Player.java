@@ -14,7 +14,7 @@ public class Player extends Entity {
             enemy.armor -= rolledDice;
 
             if (enemy.armor < 0){
-                enemy.health += this.armor;
+                enemy.health += enemy.armor;
             }
         }
 

@@ -10,11 +10,11 @@ class Enemy extends Entity {
     @Override
     public int attack(int rolledDice, Entity enemy) {
 
-        if (this.armor > 0) {
-            enemy.armor -= rolledDice;
+        if (enemy.armor > 0) {
+            enemy.armor -= rolledDice; // -10
 
             if (enemy.armor < 0) {
-                enemy.health += this.armor;
+                enemy.health += enemy.armor; // 100 + - 10
             }
         } else {
             enemy.health -= rolledDice;

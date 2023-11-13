@@ -4,8 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import java.util.ArrayList;
+
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Controller {
 
@@ -42,6 +44,8 @@ public class Controller {
 
     private int entity_turn;
 
+    private Iterator<Player> iterator;
+
 
     /**
      * Main constructor
@@ -52,9 +56,9 @@ public class Controller {
         this.playerList = new LinkedList<Player>();
 
         // Adding players
-        this.playerList.add(new Player("David", 100,100));
-        this.playerList.add(new Player("Victor", 100,100));
-        this.playerList.add(new Player("Christopher", 100,100));
+        this.playerList.add(new Player("David", 100, 100));
+        this.playerList.add(new Player("Victor", 100, 100));
+        this.playerList.add(new Player("Christopher", 100, 100));
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
@@ -62,6 +66,8 @@ public class Controller {
 
         this.welcomeStatus = 0;
         this.entity_turn = 0;
+
+        this.iterator = this.playerList.iterator();
     }
 
     /**
@@ -69,7 +75,7 @@ public class Controller {
      * running the application to avoid any NullExceptions
      * @author David Arzumanyan
      */
-    public void initialize(){
+    public void initialize() {
         // Setting the text area as non-editable
         this.textArea.setEditable(false);
 
@@ -85,37 +91,57 @@ public class Controller {
     }
 
     @FXML
-    private void onRollButtonClick(ActionEvent event){
-        if (this.entity_turn == 0){ // If 0 means it's player's turn, else enemy's
-            rollingDice(this.current_player);
-            this.current_player = this.playerList.get(2);
+    private void onRollButtonClick(ActionEvent event) {
+        if (this.welcomeStatus == 0) {
+            this.textArea.appendText("Start the game in order to be able to roll a dice!\n");
+        }
+        else {
+            if (this.entity_turn == 0) { // If 0 means it's player's turn, else enemy's
+                if (this.iterator.hasNext()) {
+                    this.current_player = iterator.next();
+                    this.player_name.setText("Player: " + this.current_player.name);
+                    this.player_armor.setText("Armor: " + this.current_player.armor);
+                    this.player_health.setText("Health: " + this.current_player.health);
+                    rollingDice(this.current_player);
+                }
+
+                // Enemy attacking, since the iterator went through all players and each player already attacked
+                else {
+                    rollingDice(this.enemy);
+
+                    // Resetting the iterator to the first element of the list
+                    // In order to let players attack again
+                    this.iterator = this.playerList.iterator();
+                }
+            }
         }
     } // TODO: Continue writing the logic
-    public void logic(){
-        while(this.playerList.size() != 0){
-            this.textArea.appendText("Player " + this.current_player.name + " starts rolling.");
+
+    public void logic() {
+        while (this.playerList.size() != 0) {
+            this.textArea.appendText("Player " + this.current_player.name + " starts rolling.\n");
 
         }
     }
+
     /**
      * Method starts the game and displays a prompt message
      * about playing players and the enemy
      * @author David Arzumanyan
      */
     @FXML
-    public void startGame(){
-        if (this.welcomeStatus == 0){
+    public void startGame() {
+        if (this.welcomeStatus == 0) {
             // Displaying the first message - players and enemy information
             this.textArea.appendText("Welcome, the game has started!\n");
             this.textArea.appendText("Below listed players are playing against the " + this.enemy.name + "\n");
-            for (Player player : this.playerList){
+            for (Player player : this.playerList) {
                 this.textArea.appendText("Player: " + player.name + "\n");
             }
             this.welcomeStatus += 1;
-        }
-        else{
+        } else {
             this.textArea.appendText("The game is already in progress, playing players are `\n");
-            for (Player player : this.playerList){
+            for (Player player : this.playerList) {
                 this.textArea.appendText("Player: " + player.name + "\n");
             }
         }
@@ -127,9 +153,9 @@ public class Controller {
      * @author David Arzumanyan
      */
     @FXML
-    public void rollingDice(Entity currEntity){
+    public void rollingDice(Entity currEntity) {
         // If the entity is of Player object
-        if (currEntity instanceof Player){
+        if (currEntity instanceof Player) {
             this.textArea.appendText("Player " + currEntity.name + " is rolling the dice\n");
 
             int damage = currEntity.rollDice();
@@ -142,10 +168,26 @@ public class Controller {
             // Attacking the enemy
             currEntity.attack(damage, this.enemy);
 
+            if (this.enemy.armor <= 0){
+                this.enemy_armor.setText("Armor: 0");
+            }
+            else{
+                this.enemy_armor.setText("Armor: " + this.enemy.armor);
+            }
+
+            if (this.enemy.health <= 0){
+                this.enemy_health.setText("Health: 0");
+                this.textArea.appendText("Enemy: " + this.enemy.name + " defeated!\n");
+            }
+            else{
+                this.enemy_health.setText("Health: " + this.enemy.health);
+            }
+
+
         }
 
         // If the entity is of Enemy object
-        else if (currEntity instanceof Enemy){
+        else if (currEntity instanceof Enemy) {
             this.textArea.appendText("Enemy " + currEntity.name + " is rolling the dice\n");
 
             int damage = currEntity.rollDice();
@@ -153,10 +195,23 @@ public class Controller {
             this.rolled_number.setVisible(true);
 
             this.textArea.appendText("Enemy " + currEntity.name + " got the number " + damage + "\n");
-            this.textArea.appendText("Player " + this.current_player +  " got damaged by " + damage + " points from " + currEntity.name + "\n");
 
             // Attacking the player
-            currEntity.attack(damage, this.current_player);
+            Random random = new Random();
+            Player random_player = this.playerList.get(random.nextInt(3));
+            currEntity.attack(damage, random_player);
+
+            Iterator<Player> player_iterator = this.playerList.iterator();
+
+            // Updating the health and armor labels for damaged player
+            if (random_player.equals(this.current_player)){
+                this.player_health.setText("Health: " + this.current_player.health);
+                this.player_armor.setText("Armor: " + this.current_player.armor);
+            }
+
+
+            this.textArea.appendText("Player " + random_player.name + " got damaged by " + damage + " points from " + currEntity.name + "\n");
         }
     }
-
+}
+// TODO: fix the player's health and armor texts
