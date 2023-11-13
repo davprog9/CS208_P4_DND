@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
@@ -46,6 +47,10 @@ public class Controller {
 
     private Iterator<Player> iterator;
 
+    private HashMap<Integer, Entity> entityMap;
+
+    private Leaderboard leaderboard;
+
 
     /**
      * Main constructor
@@ -55,12 +60,17 @@ public class Controller {
      */
     public Controller() {
         this.playerList = new LinkedList<Player>();
+        entityMap = new HashMap<>();
+        leaderboard = new Leaderboard();
 
         // Adding players
 
         this.playerList.add(new Player("David", 100, 100, 30));
         this.playerList.add(new Player("Victor", 100, 100, 30));
         this.playerList.add(new Player("Christopher", 100, 100, 30));
+        for (Player player : playerList) {
+            registerEntity(player);
+        }
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
@@ -71,6 +81,17 @@ public class Controller {
 
         this.iterator = this.playerList.iterator();
     }
+
+    // Call this method whenever a new Entity is created
+    public void registerEntity(Entity entity) {
+        entityMap.put(entity.hashCode(), entity);
+    }
+
+    // Add a method to find an Entity by hashCode
+    public Entity findEntityByHashCode(int hashCode) {
+        return entityMap.get(hashCode);
+    }
+
 
     /**
      * Method initializes the GUI components before
@@ -163,6 +184,7 @@ public class Controller {
             int damage = currEntity.rollDice();
             this.rolled_number.setText(String.valueOf(damage));
             this.rolled_number.setVisible(true);
+            leaderboard.addDamage(currEntity, damage);
 
             this.textArea.appendText("Player " + currEntity.name + " got the number " + damage + "\n");
             this.textArea.appendText("Enemy got damaged by " + damage + " points from player " + currEntity.name + "\n");
@@ -184,7 +206,6 @@ public class Controller {
             else{
                 this.enemy_health.setText("Health: " + this.enemy.health);
             }
-
 
         }
 
@@ -216,4 +237,5 @@ public class Controller {
         }
     }
 }
+
 // TODO: fix the player's health and armor texts

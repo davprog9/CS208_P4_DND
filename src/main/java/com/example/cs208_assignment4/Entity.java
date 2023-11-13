@@ -9,7 +9,6 @@ public abstract class Entity implements Actions {
     protected String name;
     protected boolean aliveStatus;
     protected int levelCount;
-    protected Hashtable<Integer, Entity> enemies = new Hashtable();
 
     public Entity(String name, int armor, int health, int damagePerTurn) {
         this.name = name;
