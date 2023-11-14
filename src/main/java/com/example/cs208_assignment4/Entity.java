@@ -9,7 +9,6 @@ public abstract class Entity implements Actions {
     protected String name;
     protected boolean aliveStatus;
     protected int levelCount;
-    protected Hashtable<Integer, Entity> enemies = new Hashtable();
 
     public Entity(String name, int armor, int health, int damagePerTurn) {
         this.name = name;
@@ -24,9 +23,7 @@ public abstract class Entity implements Actions {
         return this.aliveStatus;
     }
 
-    public void addEnemy(int level, Entity enemy) {
-        this.enemies.put(level, enemy);
-    }
+    // public void addEnemy(int level, Entity enemy) {this.enemies.put(level, enemy);}
 
     public int hashCode() {
         return this.name.hashCode() ^ Integer.hashCode(this.health) ^ Integer.hashCode(this.armor);

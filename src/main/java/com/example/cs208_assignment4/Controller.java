@@ -5,9 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class Controller {
 
@@ -43,8 +41,19 @@ public class Controller {
     private int welcomeStatus;
 
     private int entity_turn;
-
+    private int levelNum;
+    private final String[] enemyNames = new String[]{   //List of unique enemy names
+            "Skeleton",
+            "Goblin",
+            "Troll",
+            "Giant",
+            "Dragon"
+    };
     private Iterator<Player> iterator;
+
+    private HashMap<Integer, Entity> entityMap;
+
+    private Leaderboard leaderboard;
 
 
     /**
@@ -54,22 +63,40 @@ public class Controller {
      */
     public Controller() {
         this.playerList = new LinkedList<Player>();
+        entityMap = new HashMap<>();
+        leaderboard = new Leaderboard();
+        //initializes level counter
+        this.levelNum = 1;
 
         // Adding players
 
         this.playerList.add(new Player("David", 100, 100, 30));
         this.playerList.add(new Player("Victor", 100, 100, 30));
         this.playerList.add(new Player("Christopher", 100, 100, 30));
+        for (Player player : playerList) {
+            registerEntity(player);
+        }
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
-        this.enemy = new Enemy("Enemy 1", 100, 100, 55);
+        this.enemy = new Enemy(enemyNames[0], 50, 100, 55);
 
         this.welcomeStatus = 0;
         this.entity_turn = 0;
 
         this.iterator = this.playerList.iterator();
     }
+
+    // Call this method whenever a new Entity is created
+    public void registerEntity(Entity entity) {
+        entityMap.put(entity.hashCode(), entity);
+    }
+
+    // Add a method to find an Entity by hashCode
+    public Entity findEntityByHashCode(int hashCode) {
+        return entityMap.get(hashCode);
+    }
+
 
     /**
      * Method initializes the GUI components before
@@ -148,6 +175,52 @@ public class Controller {
     }
 
     /**
+     * This method is run when the Enemy health reaches 0.
+     * It increments the level counter, {@code levelNum}, and sets enemy's name, damage and armor
+     * to a value related to this level counter. Once {@code maxLevels} is reached, the game is won,
+     * it will display the leaderboard.
+     * @author Victor Serra
+     */
+    public void nextLevel(){
+        int maxLevels = 5;
+        if (levelNum != maxLevels) {
+            //increment level counter
+            this.levelNum += 1;
+            this.textArea.appendText("  -You have reached Level " + levelNum + "\n");
+            //Increase Enemy Stats
+            this.enemy_name.setText(enemyNames[levelNum-1]);
+            this.enemy.health = 100 * levelNum;
+            this.enemy.armor = 50 * levelNum;
+        }else{
+            gameOver();
+        }
+    }
+
+    /**
+     * This method will be called when all levels are beaten, or if all players die.
+     * It sorts the {@code playerList} by the score parameter, and appends at the end
+     * of the game in {@code textArea}.
+     * @author Victor Serra
+     */
+    public void gameOver(){
+        // TODO: Implement Leaderboard here (This is for the time being)
+        //sets each player score param to damage dealt
+        this.textArea.clear();
+        for (Player p: playerList){
+            p.setScore(leaderboard.getDamage(p));
+        }
+        //sorts and appends ordered players score at the end of the game
+        playerList.sort(Comparator.comparingInt(Player::getScore));
+        int j = 1;
+        for (int i = playerList.size()-1; i >= 0; i--) {
+            this.textArea.appendText(j + ") Player " + playerList.get(i).name + " Dealt " + leaderboard.getDamage(playerList.get(i)) + " Damage!\n");
+            j++;
+        }
+        //maybe restart game here
+        //this.welcomeStatus = 0;
+    }
+
+    /**
      * Method defines the entity turn first, rolls the dice and attacks its enemy
      * @param currEntity defines the playing entity, can be of object Player or Enemy
      * @author David Arzumanyan
@@ -161,6 +234,7 @@ public class Controller {
             int damage = currEntity.rollDice();
             this.rolled_number.setText(String.valueOf(damage));
             this.rolled_number.setVisible(true);
+            leaderboard.addDamage(currEntity, damage);
 
             this.textArea.appendText("Player " + currEntity.name + " got the number " + damage + "\n");
             this.textArea.appendText("Enemy got damaged by " + damage + " points from player " + currEntity.name + "\n");
@@ -178,11 +252,11 @@ public class Controller {
             if (this.enemy.health <= 0){
                 this.enemy_health.setText("Health: 0");
                 this.textArea.appendText("Enemy: " + this.enemy.name + " defeated!\n");
+                nextLevel();
             }
             else{
                 this.enemy_health.setText("Health: " + this.enemy.health);
             }
-
 
         }
 
@@ -214,5 +288,6 @@ public class Controller {
         }
     }
 }
+
 // TODO: fix the player's health and armor texts
 
