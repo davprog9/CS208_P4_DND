@@ -50,7 +50,6 @@ public class Controller {
     /**
      * Main constructor
      * Initializes list of players and one enemy object
-     *
      * @author David Arzumanyan
      */
     public Controller() {
@@ -122,7 +121,6 @@ public class Controller {
     public void logic() {
         while (this.playerList.size() != 0) {
             this.textArea.appendText("Player " + this.current_player.name + " starts rolling.\n");
-
         }
     }
 
@@ -217,3 +215,4 @@ public class Controller {
     }
 }
 // TODO: fix the player's health and armor texts
+
