@@ -23,6 +23,9 @@ public abstract class Entity implements Actions {
         return this.aliveStatus;
     }
 
+    public void setAliveStatus(boolean aliveStatus) {
+        this.aliveStatus = aliveStatus;
+    }
     // public void addEnemy(int level, Entity enemy) {this.enemies.put(level, enemy);}
 
     public int hashCode() {

@@ -4,9 +4,10 @@ import java.util.Random;
 
 public class Player extends Entity {
     private int score;
+
     public Player(String name, int armor, int health,  int damagePerTurn) {
         super(name, armor, health, damagePerTurn);
-        score = 0;
+        this.score = 0;
     }
 
     @Override
@@ -14,6 +15,7 @@ public class Player extends Entity {
 
         if (enemy.armor > 0){
             enemy.armor -= rolledDice;
+            this.score += rolledDice;
 
             if (enemy.armor < 0){
                 enemy.health += enemy.armor;
@@ -22,22 +24,16 @@ public class Player extends Entity {
 
         else{
             enemy.health -= rolledDice;
+
+            // If the enemy is defeated
+            if (enemy.health <= 0){
+                enemy.setAliveStatus(false);
+            }
         }
+
+
 
         return rolledDice;
-
-        // OLD IMPLEMENTATION
-        /*int damage = rolledDice - this.armor;
-        if (damage < 0) {
-            damage = 0;
-        }
-
-        this.health -= damage;
-        if (this.health <= 0) {
-            this.aliveStatus = false;
-        }
-
-        return damage;*/
     }
 
     public void setDamagePerTurn(int newDamage) {

@@ -2,6 +2,7 @@ package com.example.cs208_assignment4;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
@@ -33,15 +34,21 @@ public class Controller {
     @FXML
     private TextArea textArea;
 
+    @FXML
+    private Button rollDice_button;
+
     private LinkedList<Player> playerList;
+
+    private LinkedList<Player> lobby;
+
     private Player current_player;
 
     private Enemy enemy;
 
     private int welcomeStatus;
 
-    private int entity_turn;
     private int levelNum;
+
     private final String[] enemyNames = new String[]{   //List of unique enemy names
             "Skeleton",
             "Goblin",
@@ -49,6 +56,7 @@ public class Controller {
             "Giant",
             "Dragon"
     };
+
     private Iterator<Player> iterator;
 
     private HashMap<Integer, Entity> entityMap;
@@ -63,17 +71,18 @@ public class Controller {
      */
     public Controller() {
         this.playerList = new LinkedList<Player>();
-        entityMap = new HashMap<>();
-        leaderboard = new Leaderboard();
-        //initializes level counter
+        this.lobby = new LinkedList<Player>();
+        this.entityMap = new HashMap<>(); // TODO: <----- what's this for
+        this.leaderboard = new Leaderboard();
+
+        // Initializes level counter
         this.levelNum = 1;
 
         // Adding players
-
-        this.playerList.add(new Player("David", 100, 100, 30));
-        this.playerList.add(new Player("Victor", 100, 100, 30));
-        this.playerList.add(new Player("Christopher", 100, 100, 30));
-        for (Player player : playerList) {
+        this.playerList.add(new Player("David", 100, 5, 30));
+        this.playerList.add(new Player("Victor", 100, 5, 30));
+        this.playerList.add(new Player("Christopher", 100, 5, 30));
+        for (Player player : playerList) { // TODO: <------- what's this for
             registerEntity(player);
         }
 
@@ -82,7 +91,6 @@ public class Controller {
         this.enemy = new Enemy(enemyNames[0], 50, 100, 55);
 
         this.welcomeStatus = 0;
-        this.entity_turn = 0;
 
         this.iterator = this.playerList.iterator();
     }
@@ -124,32 +132,47 @@ public class Controller {
             this.textArea.appendText("Start the game in order to be able to roll a dice!\n");
         }
         else {
-            if (this.entity_turn == 0) { // If 0 means it's player's turn, else enemy's
-                if (this.iterator.hasNext()) {
-                    this.current_player = iterator.next();
-                    this.player_name.setText("Player: " + this.current_player.name);
-                    this.player_armor.setText("Armor: " + this.current_player.armor);
-                    this.player_health.setText("Health: " + this.current_player.health);
-                    rollingDice(this.current_player);
-                }
+            // While there are available players
+            if (this.iterator.hasNext()) {
 
-                // Enemy attacking, since the iterator went through all players and each player already attacked
+                // Choosing the next player
+                this.current_player = iterator.next();
+                this.player_name.setText("Player: " + this.current_player.name);
+
+                // Checking for player's armor
+                if (this.current_player.armor <= 0) {
+                    this.player_armor.setText("Armor: 0");
+                }
                 else {
-                    rollingDice(this.enemy);
-
-                    // Resetting the iterator to the first element of the list
-                    // In order to let players attack again
-                    this.iterator = this.playerList.iterator();
+                    this.player_armor.setText("Armor: " + this.current_player.armor);
                 }
+
+                // Checking for player's health
+                if (this.current_player.health <= 0) {
+                    this.player_health.setText("Health: 0");
+                    this.textArea.appendText("Player: " + this.current_player.name + " defeated!\n");
+                    nextLevel(); // TODO: WHY DO WE HAVE THIS HERE
+                }
+                else {
+                    this.player_health.setText("Health: " + this.current_player.health);
+                }
+
+                // Rolling the dice
+                rollingDice(this.current_player);
+
+            }
+
+            // Enemy attacking, since the iterator went through all players and each player already attacked
+            else {
+                rollingDice(this.enemy);
+
+                // Resetting the iterator to the first element of the list
+                // In order to let players attack again
+                this.iterator = this.playerList.iterator();
             }
         }
-    } // TODO: Continue writing the logic
-
-    public void logic() {
-        while (this.playerList.size() != 0) {
-            this.textArea.appendText("Player " + this.current_player.name + " starts rolling.\n");
-        }
     }
+
 
     /**
      * Method starts the game and displays a prompt message
@@ -272,22 +295,52 @@ public class Controller {
 
             // Attacking the player
             Random random = new Random();
-            Player random_player = this.playerList.get(random.nextInt(3));
+            Player random_player = this.playerList.get(random.nextInt(this.playerList.size()));
             currEntity.attack(damage, random_player);
 
-            Iterator<Player> player_iterator = this.playerList.iterator();
-
-            // Updating the health and armor labels for damaged player
-            if (random_player.equals(this.current_player)){
-                this.player_health.setText("Health: " + this.current_player.health);
-                this.player_armor.setText("Armor: " + this.current_player.armor);
-            }
-
-
             this.textArea.appendText("Player " + random_player.name + " got damaged by " + damage + " points from " + currEntity.name + "\n");
+
+            // If the random player is the current player then update the current player labels inplace
+            if (random_player.equals(this.current_player)){
+
+                // Setting the player's armor label
+                if (this.current_player.armor <= 0){
+                    this.player_armor.setText("Armor: 0");
+                }
+                else{
+                    this.player_armor.setText("Armor: " + this.current_player.armor);
+                }
+
+                // Setting the player's health label
+                if (this.current_player.health <= 0){
+                    this.player_health.setText("Health: 0");
+                    this.textArea.appendText("Player: " + this.current_player.name + " defeated!\n");
+                    this.lobby.add(this.current_player);
+                    this.playerList.remove(this.current_player);
+
+                    // Checking if the defeated player was the last alive player
+                    if (this.playerList.size() == 0){
+                        this.textArea.appendText("=========GAME OVER=========\nAll players were defeated");
+                        this.rollDice_button.setDisable(true);
+                    }
+                    else{
+                        nextLevel();
+                    }
+
+                }
+                else{
+                    this.player_health.setText("Health: " + this.current_player.health);
+                }
+            }
+            // If the random player is not the current displayed player
+            // We only check whether that player is defeated and display that
+            else{
+                if (random_player.health <= 0){
+                    this.textArea.appendText("Player " + random_player.name + " defeated!\n");
+                    this.lobby.add(random_player);
+                    this.playerList.remove(random_player);
+                }
+            }
         }
     }
 }
-
-// TODO: fix the player's health and armor texts
-

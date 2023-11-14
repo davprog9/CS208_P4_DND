@@ -11,13 +11,18 @@ class Enemy extends Entity {
     public int attack(int rolledDice, Entity enemy) {
 
         if (enemy.armor > 0) {
-            enemy.armor -= rolledDice; // -10
+            enemy.armor -= rolledDice;
 
             if (enemy.armor < 0) {
-                enemy.health += enemy.armor; // 100 + - 10
+                enemy.health += enemy.armor; // Example: 100 + - 10
             }
         } else {
             enemy.health -= rolledDice;
+
+            // If the enemy is defeated
+            if (enemy.health <= 0){
+                enemy.setAliveStatus(false);
+            }
         }
 
         return rolledDice;
