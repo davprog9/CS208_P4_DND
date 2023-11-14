@@ -190,9 +190,12 @@ public class Controller {
             this.levelNum += 1;
             this.textArea.appendText("  -You have reached Level " + levelNum + "\n");
             //Increase Enemy Stats
-            this.enemy_name.setText(enemyNames[levelNum-1]);
+            this.enemy.name = enemyNames[levelNum-1];
+            this.enemy_name.setText("Enemy: " + enemyNames[levelNum-1]);
             this.enemy.health = 100 * levelNum;
             this.enemy.armor = 50 * levelNum;
+            this.enemy_health.setText("Health: " + enemy.health);
+            this.enemy_armor.setText("Armor: " + enemy.armor);
         }else{
             gameOver();
         }
@@ -207,7 +210,7 @@ public class Controller {
     public void gameOver(){
         // TODO: Implement Leaderboard here (This is for the time being)
         //sets each player score param to damage dealt
-        this.textArea.clear();
+        //this.textArea.clear();
         for (Player p: playerList){
             p.setScore(leaderboard.getDamage(p));
         }
@@ -252,7 +255,6 @@ public class Controller {
             }
 
             if (this.enemy.health <= 0){
-                this.enemy_health.setText("Health: 0");
                 this.textArea.appendText("Enemy: " + this.enemy.name + " defeated!\n");
                 nextLevel();
             }
