@@ -79,9 +79,9 @@ public class Controller {
         this.levelNum = 1;
 
         // Adding players
-        this.playerList.add(new Player("David", 100, 5, 30));
-        this.playerList.add(new Player("Victor", 100, 5, 30));
-        this.playerList.add(new Player("Christopher", 100, 5, 30));
+        this.playerList.add(new Player("David", 100, 100, 30));
+        this.playerList.add(new Player("Victor", 100, 100, 30));
+        this.playerList.add(new Player("Christopher", 100, 100, 30));
         for (Player player : playerList) { // TODO: <------- what's this for
             registerEntity(player);
         }
@@ -151,6 +151,7 @@ public class Controller {
                 if (this.current_player.health <= 0) {
                     this.player_health.setText("Health: 0");
                     this.textArea.appendText("Player: " + this.current_player.name + " defeated!\n");
+                    //Once Current Enemy dies, go to next level
                     nextLevel(); // TODO: WHY DO WE HAVE THIS HERE
                 }
                 else {
