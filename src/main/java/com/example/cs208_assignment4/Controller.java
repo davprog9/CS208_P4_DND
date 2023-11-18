@@ -8,6 +8,14 @@ import javafx.scene.control.TextArea;
 
 import java.util.*;
 
+/**
+ * Controller class has the logic of the game.
+ * <p>Class manages the JavaFXML GUI controls
+ * and defines the logic of the game.
+ * @author David Arzumanyan
+ * @author Victor Serra
+ * @author Christopher Duran
+ */
 public class Controller {
 
     @FXML
@@ -218,7 +226,8 @@ public class Controller {
             for(Player p: playerList){
                 p.health += 15;
                 p.armor += 5;
-                p.setDamagePerTurn(p.damagePerTurn*2);
+                double damageCounter = p.damagePerTurn * 1.6;
+                p.setDamagePerTurn((int) (damageCounter));
             }
         }else{
             this.textArea.appendText("=========GAME OVER=========\nAll Enemies were defeated!\n");
