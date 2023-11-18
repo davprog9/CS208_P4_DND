@@ -245,13 +245,13 @@ public class Controller {
         //sets each player score param to damage dealt
         //this.textArea.clear();
         for (Player p: playerList){
-            p.setScore(leaderboard.getDamage(p));
+            leaderboard.updateScore(p, p.getScore());
         }
         //sorts and appends ordered players score at the end of the game
         playerList.sort(Comparator.comparingInt(Player::getScore));
         int j = 1;
         for (int i = playerList.size()-1; i >= 0; i--) {
-            this.textArea.appendText(j + ") Player " + playerList.get(i).name + " Dealt " + leaderboard.getDamage(playerList.get(i)) + " Damage!\n");
+            this.textArea.appendText(j + ") Player " + playerList.get(i).name + " Dealt " + leaderboard.getScore(playerList.get(i)) + " Damage!\n");
             j++;
         }
         //maybe restart game here
@@ -272,7 +272,6 @@ public class Controller {
             int damage = currEntity.rollDice();
             this.rolled_number.setText(String.valueOf(damage));
             this.rolled_number.setVisible(true);
-            leaderboard.addDamage((Player) currEntity, damage);
 
             this.textArea.appendText("Player " + currEntity.name + " got the number " + damage + "\n");
             this.textArea.appendText("Enemy got damaged by " + damage + " points from player " + currEntity.name + "\n");
