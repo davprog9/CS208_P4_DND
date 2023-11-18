@@ -17,6 +17,7 @@ public abstract class Entity implements Actions {
         this.damagePerTurn = damagePerTurn;
         this.aliveStatus = true;
         this.levelCount = 0;
+
     }
 
     public boolean isAlive() {
@@ -28,8 +29,20 @@ public abstract class Entity implements Actions {
     }
     // public void addEnemy(int level, Entity enemy) {this.enemies.put(level, enemy);}
 
+    @Override
     public int hashCode() {
-        return this.name.hashCode() ^ Integer.hashCode(this.health) ^ Integer.hashCode(this.armor);
+        String name = this.name;
+
+        int hashCode = 0;
+
+        for (int i = 0; i < name.length(); i++){
+            char character = name.charAt(i);
+            int asciiValue = (int) character;
+            hashCode += asciiValue;
+        }
+
+        return hashCode;
+
     }
 }
 

@@ -8,15 +8,12 @@ public class Leaderboard {
     private Hashtable<Integer, Integer> damageTable;
 
     public Leaderboard() {
-
         damageTable = new Hashtable<>();
-
     }
 
     public void addDamage (Entity entity, int damage) {
         int entityCode = entity.hashCode();
         damageTable.put(entityCode, damageTable.getOrDefault(entityCode, 0) + damage);
-
     }
 
     public int getDamage(Entity entity) {
@@ -26,7 +23,6 @@ public class Leaderboard {
 
     public void reset() {
         damageTable.clear();
-
     }
 
     public void displayLeaderboard(Controller controller) {

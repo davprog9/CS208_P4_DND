@@ -31,8 +31,6 @@ public class Player extends Entity {
             }
         }
 
-
-
         return rolledDice;
     }
 
@@ -52,4 +50,5 @@ public class Player extends Entity {
     public int getScore() {
         return score;
     }
+
 }

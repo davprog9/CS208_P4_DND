@@ -52,7 +52,7 @@ public class Controller {
 
     private int levelNum;
 
-    private final String[] enemyNames = new String[]{   //List of unique enemy names
+    private final String[] enemyNames = new String[]{   // List of unique enemy names
             "Skeleton",
             "Goblin",
             "Troll",
@@ -85,9 +85,10 @@ public class Controller {
         this.playerList.add(new Player("David", 100, 100, 30));
         this.playerList.add(new Player("Victor", 100, 100, 30));
         this.playerList.add(new Player("Christopher", 100, 100, 30));
-        for (Player player : playerList) { // TODO: <------- what's this for
+        for (Player player : playerList) { // TODO: Change the playerList to lobby and move the method to the end of the game once the game is over
             registerEntity(player);
         }
+
 
         // Setting the current player and the enemy
         this.current_player = this.playerList.getFirst();
@@ -102,6 +103,7 @@ public class Controller {
     public void registerEntity(Entity entity) {
         entityMap.put(entity.hashCode(), entity);
     }
+
 
     // Add a method to find an Entity by hashCode
     public Entity findEntityByHashCode(int hashCode) {
@@ -130,6 +132,11 @@ public class Controller {
 
     }
 
+    /**
+     * Controls the logic of the game
+     * @param event defines the event which happens at every click on the button
+     * @author David Arzumanyan
+     */
     @FXML
     private void onRollButtonClick(ActionEvent event) {
         if (this.welcomeStatus == 0) {
