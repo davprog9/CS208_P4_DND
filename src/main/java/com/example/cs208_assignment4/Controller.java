@@ -37,6 +37,9 @@ public class Controller {
     @FXML
     private Button rollDice_button;
 
+    @FXML
+    private Button startGame_button;
+
     private LinkedList<Player> playerList;
 
     private LinkedList<Player> lobby;
@@ -79,9 +82,9 @@ public class Controller {
         this.levelNum = 1;
 
         // Adding players
-        this.playerList.add(new Player("David", 100, 5, 30));
-        this.playerList.add(new Player("Victor", 100, 5, 30));
-        this.playerList.add(new Player("Christopher", 100, 5, 30));
+        this.playerList.add(new Player("David", 100, 100, 30));
+        this.playerList.add(new Player("Victor", 100, 100, 30));
+        this.playerList.add(new Player("Christopher", 100, 100, 30));
         for (Player player : playerList) { // TODO: <------- what's this for
             registerEntity(player);
         }
@@ -104,6 +107,7 @@ public class Controller {
     public Entity findEntityByHashCode(int hashCode) {
         return entityMap.get(hashCode);
     }
+
 
 
     /**
@@ -132,6 +136,7 @@ public class Controller {
             this.textArea.appendText("Start the game in order to be able to roll a dice!\n");
         }
         else {
+            this.startGame_button.setText("Game status");
             // While there are available players
             if (this.iterator.hasNext()) {
 
@@ -151,7 +156,7 @@ public class Controller {
                 if (this.current_player.health <= 0) {
                     this.player_health.setText("Health: 0");
                     this.textArea.appendText("Player: " + this.current_player.name + " defeated!\n");
-                    nextLevel(); // TODO: WHY DO WE HAVE THIS HERE
+                    nextLevel();
                 }
                 else {
                     this.player_health.setText("Health: " + this.current_player.health);
