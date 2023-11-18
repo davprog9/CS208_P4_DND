@@ -1,20 +1,22 @@
 package com.example.cs208_assignment4;
 
+import java.util.Hashtable;
+
 public class Leaderboard {
 
-    private Hashtable damageTable;
+    private Hashtable scoreTable; // Table for storing scores
 
     public Leaderboard() {
-        damageTable = new Hashtable(10);
+        scoreTable = new Hashtable(10); // Initialize the score table with initial capacity
     }
 
-    public void addDamage (Player entity, int damage) {
-        int entityCode = entity.hashCode();
-        damageTable.put(entityCode, entity.getScore());
+    public void updateScore(Entity player, int score) {
+        int playerCode = player.hashCode();
+        scoreTable.put(playerCode, score);
     }
 
-    public int getDamage(Player player) {
-        return player.getScore();
+    public int getScore(Entity player) {
+        int playerCode = player.hashCode();
+        return (int) scoreTable.get(playerCode);
     }
-
 }
