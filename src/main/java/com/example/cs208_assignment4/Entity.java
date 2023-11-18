@@ -2,6 +2,10 @@ package com.example.cs208_assignment4;
 
 import java.util.Hashtable;
 
+/**
+ * Christopher Duran
+ */
+
 public abstract class Entity implements Actions {
     protected int armor;
     protected int health;
