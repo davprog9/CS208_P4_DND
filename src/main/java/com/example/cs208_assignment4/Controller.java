@@ -62,8 +62,6 @@ public class Controller {
 
     private Iterator<Player> iterator;
 
-    private HashMap<Integer, Entity> entityMap;
-
     private Leaderboard leaderboard;
 
 
@@ -75,19 +73,15 @@ public class Controller {
     public Controller() {
         this.playerList = new LinkedList<Player>();
         this.lobby = new LinkedList<Player>();
-        this.entityMap = new HashMap<>(); // TODO: <----- what's this for
         this.leaderboard = new Leaderboard();
 
         // Initializes level counter
         this.levelNum = 1;
 
         // Adding players
-        this.playerList.add(new Player("David", 100, 100, 30));
-        this.playerList.add(new Player("Victor", 100, 100, 30));
-        this.playerList.add(new Player("Christopher", 100, 100, 30));
-        for (Player player : playerList) { // TODO: Change the playerList to lobby and move the method to the end of the game once the game is over
-            registerEntity(player);
-        }
+        this.playerList.add(new Player("David", 100, 100, 20));
+        this.playerList.add(new Player("Victor", 100, 100, 20));
+        this.playerList.add(new Player("Christopher", 100, 100, 20));
 
 
         // Setting the current player and the enemy
@@ -98,18 +92,6 @@ public class Controller {
 
         this.iterator = this.playerList.iterator();
     }
-
-    // Call this method whenever a new Entity is created
-    public void registerEntity(Entity entity) {
-        entityMap.put(entity.hashCode(), entity);
-    }
-
-
-    // Add a method to find an Entity by hashCode
-    public Entity findEntityByHashCode(int hashCode) {
-        return entityMap.get(hashCode);
-    }
-
 
     /**
      * Method initializes the GUI components before
@@ -229,7 +211,16 @@ public class Controller {
             this.enemy.armor = 50 * levelNum;
             this.enemy_health.setText("Health: " + enemy.health);
             this.enemy_armor.setText("Armor: " + enemy.armor);
+            for(Player p: playerList){
+                p.health += 15;
+                p.armor += 5;
+                p.setDamagePerTurn(p.damagePerTurn*2);
+            }
         }else{
+            this.textArea.appendText("=========GAME OVER=========\nAll Enemies were defeated\n");
+            this.enemy_health.setText("Health: 0");
+            this.enemy_armor.setText("Armor: 0");
+            rollDice_button.setDisable(true);
             gameOver();
         }
     }
@@ -241,21 +232,24 @@ public class Controller {
      * @author Victor Serra
      */
     public void gameOver(){
-        // TODO: Implement Leaderboard here (This is for the time being)
-        //sets each player score param to damage dealt
-        //this.textArea.clear();
-        for (Player p: playerList){
+        //Moves remaining players in Lobby
+        if (this.playerList.size()>0){
+            for(Player p: this.playerList){
+                this.lobby.add(p);
+                this.playerList.remove(p);
+            }
+        }
+        for (Player p: lobby){
             leaderboard.updateScore(p, p.getScore());
         }
-        //sorts and appends ordered players score at the end of the game
-        playerList.sort(Comparator.comparingInt(Player::getScore));
-        int j = 1;
-        for (int i = playerList.size()-1; i >= 0; i--) {
-            this.textArea.appendText(j + ") Player " + playerList.get(i).name + " Dealt " + leaderboard.getScore(playerList.get(i)) + " Damage!\n");
-            j++;
+        //Appends ordered players score at the end of the game
+        if (playerList.size()==0) {
+            int j = 1;
+            for (int i = lobby.size() - 1; i >= 0; i--) {
+                this.textArea.appendText(j + ") Player " + lobby.get(i).name + " Dealt " + leaderboard.getScore(lobby.get(i)) + " Damage!\n");
+                j++;
+            }
         }
-        //maybe restart game here
-        //this.welcomeStatus = 0;
     }
 
     /**
@@ -333,7 +327,8 @@ public class Controller {
 
                     // Checking if the defeated player was the last alive player
                     if (this.playerList.size() == 0){
-                        this.textArea.appendText("=========GAME OVER=========\nAll players were defeated");
+                        this.textArea.appendText("=========GAME OVER=========\nAll players were defeated\n");
+                        gameOver();
                         this.rollDice_button.setDisable(true);
                     }
                     else{
