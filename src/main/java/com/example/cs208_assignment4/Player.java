@@ -2,9 +2,20 @@ package com.example.cs208_assignment4;
 
 import java.util.Random;
 
+/**
+ * This is the Player class which extends the Entity class. Within the constructor, every player has a name,
+ * starting armor, starting health, damage per turn, and a score which starts at 0. The attack method uses the rollDice
+ * method, which creates a Random number with its maximum being the Players damagePerTurn, and subtracts that number
+ * from the Enemies health or armor. It also adds that number to the players score.
+ * @author David Arzumanyan, Victor Serra
+ */
+
 public class Player extends Entity {
     private int score;
-
+    public Player(){
+        super("player",1,1,1);
+        this.score = 0;
+    }
     public Player(String name, int armor, int health,  int damagePerTurn) {
         super(name, armor, health, damagePerTurn);
         this.score = 0;

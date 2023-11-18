@@ -240,8 +240,8 @@ public class Controller {
 
     /**
      * This method will be called when all levels are beaten, or if all players die.
-     * It sorts the {@code playerList} by the score parameter, and appends at the end
-     * of the game in {@code textArea}.
+     * It sorts the {@code lobby} by the score parameter of players in {@code lobby}, and appends a leaderboard
+     * at the end of the game in {@code textArea}.
      * @author Victor Serra
      */
     public void gameOver() {
@@ -255,13 +255,15 @@ public class Controller {
                 iterator2.remove(); // Removing the current player
             }
         }
-
         for (Player p : lobby) {
             leaderboard.updateScore(p, p.getScore());
         }
+        //Sorts players in lobby by their score
+        lobby.sort(Comparator.comparingInt(Player::getScore));
 
         //Appends ordered players score at the end of the game
         int j = 1;
+        this.textArea.appendText("  -Leaderboard:\n");
         for (int i = lobby.size() - 1; i >= 0; i--) {
             this.textArea.appendText(j + ") Player " + lobby.get(i).name + " Dealt " + leaderboard.getScore(lobby.get(i)) + " Damage!\n");
             j++;
