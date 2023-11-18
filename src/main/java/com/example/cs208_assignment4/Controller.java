@@ -37,6 +37,9 @@ public class Controller {
     @FXML
     private Button rollDice_button;
 
+    @FXML
+    private Button startGame_button;
+
     private LinkedList<Player> playerList;
 
     private LinkedList<Player> lobby;
@@ -132,6 +135,7 @@ public class Controller {
             this.textArea.appendText("Start the game in order to be able to roll a dice!\n");
         }
         else {
+            this.startGame_button.setText("Game status");
             // While there are available players
             if (this.iterator.hasNext()) {
 
@@ -152,7 +156,7 @@ public class Controller {
                     this.player_health.setText("Health: 0");
                     this.textArea.appendText("Player: " + this.current_player.name + " defeated!\n");
                     //Once Current Enemy dies, go to next level
-                    nextLevel(); // TODO: WHY DO WE HAVE THIS HERE
+                    nextLevel();
                 }
                 else {
                     this.player_health.setText("Health: " + this.current_player.health);
