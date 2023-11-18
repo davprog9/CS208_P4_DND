@@ -1,7 +1,5 @@
 package com.example.cs208_assignment4;
 
-import java.util.Map;
-
 public class Leaderboard {
 
     private Hashtable damageTable;
