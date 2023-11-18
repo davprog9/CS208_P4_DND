@@ -4,7 +4,8 @@ import java.util.LinkedList;
 
 /**
  * Christopher Duran
- *
+ * This class uses a simple array of linked list for collision handling. The program defines a custom hash table data structure.
+ * Each entry in the hash table consists of a key and a value, encapsulated in the Entry class.
  */
 public class Hashtable {
     private LinkedList<Entry>[] table;

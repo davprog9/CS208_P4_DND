@@ -19,4 +19,8 @@ public class Leaderboard {
         int playerCode = player.hashCode();
         return (int) scoreTable.get(playerCode);
     }
+
+    public Hashtable getScoreTable() {
+        return scoreTable;
+    }
 }
