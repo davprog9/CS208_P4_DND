@@ -6,7 +6,6 @@ import java.util.LinkedList;
  * Christopher Duran
  *
  */
-
 public class Hashtable {
     private LinkedList<Entry>[] table;
     private int capacity;
