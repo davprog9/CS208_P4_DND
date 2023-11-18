@@ -272,7 +272,7 @@ public class Controller {
             int damage = currEntity.rollDice();
             this.rolled_number.setText(String.valueOf(damage));
             this.rolled_number.setVisible(true);
-            leaderboard.addDamage(currEntity, damage);
+            leaderboard.addDamage((Player) currEntity, damage);
 
             this.textArea.appendText("Player " + currEntity.name + " got the number " + damage + "\n");
             this.textArea.appendText("Enemy got damaged by " + damage + " points from player " + currEntity.name + "\n");
