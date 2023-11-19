@@ -3,8 +3,10 @@ package com.example.cs208_assignment4;
 import java.util.LinkedList;
 
 /**
- * This class uses a simple array of linked list for collision handling. The program defines a custom hash table data structure.
- * Each entry in the hash table consists of a key and a value, encapsulated in the Entry class.
+ * Custom implementation of a hash table using separate chaining for collision handling.
+ * The hash table can dynamically resize based on a load factor threshold to maintain efficient operations.
+ * It stores data in a linked list array, where each entry consists of a key and a value.
+ *
  * @author Christopher Duran
  */
 public class Hashtable {
@@ -13,15 +15,31 @@ public class Hashtable {
     private int size;
     private final double loadFactorThreshold;
 
+    /**
+     * Represents a key-value pair in the hash table.
+     */
     private static class Entry {
         final int key;
         int value;
 
+        /**
+         * Constructs an Entry with a specified key and value.
+         *
+         * @param key   The key associated with the entry.
+         * @param value The value associated with the key.
+         */
         Entry(int key, int value) {
             this.key = key;
             this.value = value;
         }
     }
+
+    /**
+     * Constructs a Hashtable with specified initial capacity and load factor threshold.
+     *
+     * @param initialCapacity     The initial capacity of the hash table.
+     *
+     */
 
     public Hashtable(int initialCapacity) {
         this.capacity = initialCapacity;
@@ -33,10 +51,22 @@ public class Hashtable {
         this.size = 0;
     }
 
+    /**
+     * Calculates the bucket index for a given key.
+     *
+     * @param key The key for which the bucket index is to be calculated.
+     * @return The bucket index.
+     */
     private int getBucketIndex(int key) {
         return key % capacity;
     }
 
+    /**
+     * Inserts or updates a key-value pair in the hash table.
+     *
+     * @param key   The key to be inserted or updated.
+     * @param value The value to be associated with the key.
+     */
     public void put(int key, int value) {
         int bucketIndex = getBucketIndex(key);
         for (Entry entry : table[bucketIndex]) {
@@ -54,6 +84,12 @@ public class Hashtable {
         }
     }
 
+    /**
+     * Retrieves the value associated with a specified key.
+     *
+     * @param key The key whose associated value is to be returned.
+     * @return The value associated with the specified key, or -1 if the key is not found.
+     */
     public int get(int key) {
         int bucketIndex = getBucketIndex(key);
         for (Entry entry : table[bucketIndex]) {
@@ -64,6 +100,10 @@ public class Hashtable {
         return -1; // Key not found
     }
 
+    /**
+     * Resizes the hash table and rehashes all existing entries.
+     * This method is called when the current size exceeds the load factor threshold.
+     */
     private void rehash() {
         LinkedList<Entry>[] oldTable = table;
         capacity *= 2;
