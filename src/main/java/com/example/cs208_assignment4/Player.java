@@ -11,10 +11,24 @@ import java.util.Random;
  */
 public class Player extends Entity {
     private int score;
+
+    /**
+     * Default constructor
+     * @author Victor Serra
+     */
     public Player(){
         super("player",1,1,1);
         this.score = 0;
     }
+
+    /**
+     * Main constructor
+     * @param name defines the name of the player
+     * @param armor defines the armor of the player
+     * @param health defines the health of the player
+     * @param damagePerTurn defines damage per turn name of the player
+     * @author Victor Serra
+     */
     public Player(String name, int armor, int health,  int damagePerTurn) {
         super(name, armor, health, damagePerTurn);
         this.score = 0;
@@ -79,5 +93,24 @@ public class Player extends Entity {
         return score;
     }
 
+    /**
+     * equals method for Player object
+     * @param obj defines the object to be compared with the player
+     * @return Returns a data type boolean
+     * @author David Arzumanyan
+     */
+    public boolean equals(Entity obj){
+        if (obj instanceof Player){
+            if (this.hashCode() == obj.hashCode()){
+                if (this.health == obj.health && this.armor == obj.armor && this.damagePerTurn == obj.damagePerTurn && this.score == ((Player) obj).getScore()){
+                    if (this.name.equals(obj.name)){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
 }
