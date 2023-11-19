@@ -1,15 +1,15 @@
 package com.example.cs208_assignment4;
 
-import java.util.Hashtable;
-
 /**
- * Christopher Duran
+ * Class represents an Entity object
+ * which has different unique parameters
+ * @author Christopher Duran
  */
-
 public abstract class Entity implements Actions {
     protected int armor;
     protected int health;
     protected int damagePerTurn;
+
     protected String name;
     protected boolean aliveStatus;
 
@@ -30,6 +30,11 @@ public abstract class Entity implements Actions {
     }
     // public void addEnemy(int level, Entity enemy) {this.enemies.put(level, enemy);}
 
+    /**
+     * Method includes a unique implementation of a hashcode
+     * @return Returns a data type int
+     * @author David Arzumanyan
+     */
     @Override
     public int hashCode() {
         String name = this.name;

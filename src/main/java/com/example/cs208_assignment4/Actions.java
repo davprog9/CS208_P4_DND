@@ -1,5 +1,9 @@
 package com.example.cs208_assignment4;
 
+/**
+ * Interface includes necessary action functions
+ * @author Christopher Duran
+ */
 interface Actions {
     int rollDice();
 

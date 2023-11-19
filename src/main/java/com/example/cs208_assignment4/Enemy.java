@@ -32,4 +32,20 @@ class Enemy extends Entity {
         Random rand = new Random();
         return rand.nextInt(damagePerTurn) + 1;
     }
+
+    /**
+     * toString() method
+     * @return Returns a data type String
+     * @author Christopher Duran
+     */
+    @Override
+    public String toString() {
+        return "Enemy{" +
+                "armor=" + armor +
+                ", health=" + health +
+                ", damagePerTurn=" + damagePerTurn +
+                ", name='" + name + '\'' +
+                ", aliveStatus=" + aliveStatus +
+                '}';
+    }
 }
