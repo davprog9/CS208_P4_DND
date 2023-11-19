@@ -40,7 +40,6 @@ public class Hashtable {
      * @param initialCapacity     The initial capacity of the hash table.
      *
      */
-
     public Hashtable(int initialCapacity) {
         this.capacity = initialCapacity;
         this.loadFactorThreshold = 3;
