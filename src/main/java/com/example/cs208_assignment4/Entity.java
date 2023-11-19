@@ -12,7 +12,6 @@ public abstract class Entity implements Actions {
     protected int damagePerTurn;
     protected String name;
     protected boolean aliveStatus;
-    protected int levelCount;
 
     public Entity(String name, int armor, int health, int damagePerTurn) {
         this.name = name;
@@ -20,8 +19,6 @@ public abstract class Entity implements Actions {
         this.health = health;
         this.damagePerTurn = damagePerTurn;
         this.aliveStatus = true;
-        this.levelCount = 0;
-
     }
 
     public boolean isAlive() {
