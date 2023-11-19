@@ -3,7 +3,10 @@ package com.example.cs208_assignment4;
 import java.util.Hashtable;
 
 /**
- * Christopher Duran
+ * Entity class that player and enemy inherit from, has an isAlive and setAliveStatus which is used whenever an Entity
+ * dies. And the hashCode method, which goes through each char in the entities name and the using its ascii
+ * value, sums it together for Entities hashCode.
+ * @author Christopher Duran
  */
 
 public abstract class Entity implements Actions {
@@ -28,7 +31,6 @@ public abstract class Entity implements Actions {
     public void setAliveStatus(boolean aliveStatus) {
         this.aliveStatus = aliveStatus;
     }
-    // public void addEnemy(int level, Entity enemy) {this.enemies.put(level, enemy);}
 
     @Override
     public int hashCode() {
