@@ -3,7 +3,7 @@
 
 ![Title image](Images/bannerImage.png)
 
-## This project game mimics the real Dungeons and Dragons game. It includes the logic of the actual game and mimics the real logic and functionality.
+# This project game mimics the real Dungeons and Dragons game. It includes the logic of the actual game and mimics the real logic and functionality.
 
 ## Table of contents
 * [Motivation](#motivation)
