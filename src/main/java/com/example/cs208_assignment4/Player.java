@@ -9,7 +9,6 @@ import java.util.Random;
  * from the Enemies health or armor. It also adds that number to the players score.
  * @author David Arzumanyan, Victor Serra
  */
-
 public class Player extends Entity {
     private int score;
     public Player(){
@@ -21,6 +20,13 @@ public class Player extends Entity {
         this.score = 0;
     }
 
+    /**
+     * Method implements the attack action of the Player object
+     * @param rolledDice defines the rolled dice amount
+     * @param enemy defines the enemy to attack
+     * @return Returns a data type int - the amount of the damage
+     * @author Victor Serra
+     */
     @Override
     public int attack(int rolledDice, Entity enemy) {
         this.score += rolledDice;
@@ -44,19 +50,31 @@ public class Player extends Entity {
         return rolledDice;
     }
 
+    /**
+     * Setter for damage per turn
+     * @param newDamage defines the new damage range for the player
+     * @author Victor Serra
+     */
     public void setDamagePerTurn(int newDamage) {
         this.damagePerTurn = newDamage;
     }
 
+    /**
+     * Method rolls the dice for the player
+     * and gets a random number up to the damagePerTurn range
+     * @return Method returns a random amount of damage to be dealt
+     * @author Victor Serra
+     */
     public int rollDice() {
         Random rand = new Random();
         return rand.nextInt(damagePerTurn) + 1;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
+    /**
+     * Getter for the score
+     * @return Returns a data type int.
+     * @author Victor Serra
+     */
     public int getScore() {
         return score;
     }
