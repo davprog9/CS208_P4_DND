@@ -2,6 +2,7 @@ package com.example.cs208_assignment4;
 
 import java.util.Random;
 
+
 class Enemy extends Entity {
     public Enemy(){
         super("enemy", 1,1,1);
