@@ -355,7 +355,6 @@ public class Controller {
                     else{
                         nextLevel();
                     }
-
                 }
                 else{
                     this.player_health.setText("Health: " + this.current_player.health);
@@ -371,5 +370,35 @@ public class Controller {
                 }
             }
         }
+    }
+
+    /**
+     * toString for Controller class
+     * @return Returns a data type String
+     * @author David Arzumanyan
+     */
+    @Override
+    public String toString() {
+        return "Controller{" +
+                "player_name=" + player_name +
+                ", player_health=" + player_health +
+                ", player_armor=" + player_armor +
+                ", enemy_name=" + enemy_name +
+                ", enemy_health=" + enemy_health +
+                ", enemy_armor=" + enemy_armor +
+                ", rolled_number=" + rolled_number +
+                ", textArea=" + textArea +
+                ", rollDice_button=" + rollDice_button +
+                ", startGame_button=" + startGame_button +
+                ", playerList=" + playerList +
+                ", lobby=" + lobby +
+                ", current_player=" + current_player +
+                ", enemy=" + enemy +
+                ", welcomeStatus=" + welcomeStatus +
+                ", levelNum=" + levelNum +
+                ", enemyNames=" + Arrays.toString(enemyNames) +
+                ", iterator=" + iterator +
+                ", leaderboard=" + leaderboard +
+                '}';
     }
 }

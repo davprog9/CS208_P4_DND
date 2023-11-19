@@ -7,6 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Class manages the JavaFXML stage and scene
+ * and launches the game.
+ * @author David Arzumanyan
+ */
 public class HelloApplication extends Application {
 
     public void start(Stage stage) throws IOException {
