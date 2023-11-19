@@ -2,6 +2,14 @@ package com.example.cs208_assignment4;
 
 import java.util.Random;
 
+/**
+ * This is the Enemy class which extends the Entity class. Within the constructor, every enemy has a name,
+ * starting armor, starting health and damage per turn. The attack method uses the rollDice method,
+ * which creates a Random number with its maximum being the Enemies damagePerTurn, and subtracts that number
+ * from the Players health or armor. It also adds that number to the players score.
+ * @author David Arzumanyan, Christopher Duran
+ */
+
 class Enemy extends Entity {
     public Enemy(){
         super("enemy", 1,1,1);
