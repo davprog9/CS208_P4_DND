@@ -1,6 +1,5 @@
+// David Arzumanyan, Victor Serra, Christopher Duran
 package com.example.cs208_assignment4;
-
-import java.util.Hashtable;
 
 /**
  * Class contains the leaderboard of players
