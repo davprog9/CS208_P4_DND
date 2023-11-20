@@ -3,7 +3,7 @@
 
 ![Title image](Images/bannerImage.png)
 
-## This project game mimics the real Dungeons and Dragons game. It includes the logic of the actual game and mimics the real logic and functionality.
+This project game mimics the real Dungeons and Dragons game. It includes the logic of the actual game and mimics the real logic and functionality.
 
 ## Table of contents
 * [Motivation](#motivation)
@@ -26,7 +26,12 @@ The Controller class in this code mimic game manages the logic of the game and h
 
 Levels are incremented as players advance, increasing enemy stats. Once the maximum level is reached, the game ends, and the leaderboard displays player scores based on damage dealt. The game includes features like armor, health, and damage, and it handles player and enemy interactions through dice rolls. Overall, the Controller class orchestrates the game flow, making it an engaging Dungeons and Dragons inspired experience.
 
+<a name="Results"><a/>
+## Results
+The final result of our game is the leaderboard.
+We have the class Leaderboard which is using a custom implemented Hashtable class. This class Leaderboard takes the final dealt damages of players and inserts all players into the hashtable based on their unique hashcodes. After the insertion, we can observe that the leaderboard sorts and prints the final results of dealt damages in the text area.
 
+![Leaderboard result](Images/leaderboard.png)
 
 
 
