@@ -9,7 +9,7 @@ This project game mimics the real Dungeons and Dragons game. It includes the log
 * [Motivation](#motivation)
 * [Summary of approach](#summary-of-approach)
 * [Results](#results)
-* [What I learned](#what-we-learned)
+* [What we learned](#what-we-learned)
 * [How to use this repository](#how-to-use-this-repository)
 
 
