@@ -52,7 +52,7 @@ Finally, we learned how to organize our project and use proper ADTs for specific
 
 Anyone who wants to use this repository would need to download the entire project and store it at a convenient package folder and run it.
 
-Note: Do not change the package name in the code, since the JavaFXML can cause issues running the actual GUI part. The reason of it, is because we have set the fx:controller for the AnchorPane, whcih is located in the CS208_Assignment4 directory.
+Note: Do not change the package name in the code, since the JavaFXML can cause issues running the actual GUI part. The reason of it, is because we have set the fx:controller for the AnchorPane, which is located in the CS208_Assignment4 directory.
 
 ![fxml file](Images/fxml_file.png)
 
