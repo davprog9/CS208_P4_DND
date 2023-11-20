@@ -55,3 +55,11 @@ Anyone who wants to use this repository would need to download the entire projec
 Note: Do not change the package name in the code, since the JavaFXML can cause issues running the actual GUI part. The reason of it, is because we have set the fx:controller for the AnchorPane, whcih is located in the CS208_Assignment4 directory.
 
 ![fxml file](Images/fxml_file.png)
+
+
+## Authors
+
+- [@davprog9](https://www.github.com/davprog9) David
+- [@vserra3192](https://www.github.com/vserra3192) Victor
+- [@Vrypel](https://www.github.com/Vrypel) Christopher
+
