@@ -66,6 +66,8 @@ public abstract class Entity implements Actions {
             hashCode += asciiValue;
         }
 
+        hashCode *= hashCode;
+
         return hashCode;
     }
 }
