@@ -214,9 +214,6 @@ public class Controller {
             }
         } else if (difficulty.equals("Hard")) {  //Players start with standard amount of health and ok damage
             this.maxLevels = 8; //8 enemies
-            for(Player p: playerList){
-                p.setDamagePerTurn(25);
-            }
         }
         //checks if any players have been created
         if (playerList.size()!=0) {
